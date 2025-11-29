@@ -1,10 +1,11 @@
+import { ThemeToggle } from '@/components/theme-toggle';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import { useCallback, useMemo, useRef } from 'react';
-import { Button, ScrollView, StyleSheet, Text } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -25,27 +26,46 @@ export default function HomeScreen() {
   );
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['top']}>
-      <ScrollView className="flex-1 bg-white">
-        <Text className="text-red-500">Hello</Text>
-        <TextInput
-          mode="outlined"
-          underlineColor="transparent"
-          activeUnderlineColor="transparent"
-          placeholder="Enter your name"
-          label="First Name"
-          outlineColor="#cac4d0"
-          activeOutlineColor="#f97316"
-          outlineStyle={{ borderWidth: 1 }}
-          theme={{
-            colors: {
-              background: '#fff',
-            },
-          }}
-        />
-        <Button
-          title="Open Bottom Sheet"
-          onPress={() => sheetRef.current?.snapToIndex(0)}
-        />
+      <ScrollView className="flex-1 bg-white dark:bg-gray-900">
+        <View className="p-4">
+          <Text className="text-2xl font-bold mb-4 text-fuchsia dark:text-white">
+            Theme Settings
+          </Text>
+          <ThemeToggle />
+          <Text className="mt-4 text-gray-600 dark:text-gray-400">
+            Select your preferred theme. System will use your device&apos;s
+            theme by default.
+          </Text>
+        </View>
+        <View className="p-4">
+          <Text className="text-red-500 dark:text-green-500 text-lg font-semibold">
+            Hello - Theme Demo
+          </Text>
+          <Text className="mt-2 text-gray-800 dark:text-gray-200">
+            This text changes color based on theme
+          </Text>
+        </View>
+        <View className="p-4">
+          <TextInput
+            mode="outlined"
+            underlineColor="transparent"
+            activeUnderlineColor="transparent"
+            placeholder="Enter your name"
+            label="First Name"
+            outlineColor="#cac4d0"
+            activeOutlineColor="#f97316"
+            outlineStyle={{ borderWidth: 1 }}
+            theme={{
+              colors: {
+                background: '#fff',
+              },
+            }}
+          />
+          <Button
+            title="Open Bottom Sheet"
+            onPress={() => sheetRef.current?.snapToIndex(0)}
+          />
+        </View>
       </ScrollView>
       <BottomSheet
         ref={sheetRef}
