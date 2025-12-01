@@ -1,12 +1,13 @@
 import { ThemeToggle } from '@/components/theme-toggle';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
 import { useCallback, useMemo, useRef } from 'react';
-import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
@@ -45,25 +46,12 @@ export default function HomeScreen() {
             This text changes color based on theme
           </Text>
         </View>
-        <View className="p-4">
-          <TextInput
-            mode="outlined"
-            underlineColor="transparent"
-            activeUnderlineColor="transparent"
-            placeholder="Enter your name"
-            label="First Name"
-            outlineColor="#cac4d0"
-            activeOutlineColor="#f97316"
-            outlineStyle={{ borderWidth: 1 }}
-            theme={{
-              colors: {
-                background: '#fff',
-              },
-            }}
-          />
+        <View className="p-4 space-y-1">
+          <Input placeholder="Office Depot" label="Merchant" important={true} />
           <Button
             title="Open Bottom Sheet"
             onPress={() => sheetRef.current?.snapToIndex(0)}
+            variant="secondary"
           />
         </View>
       </ScrollView>
