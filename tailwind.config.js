@@ -1,9 +1,25 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   content: ['./app/**/*.{js,jsx,ts,tsx}', './components/**/*.{js,jsx,ts,tsx}'],
   presets: [require('nativewind/preset')],
   theme: {
     extend: {
+      fontFamily: {
+        'roboto-slab': [
+          'RobotoSlab_400Regular',
+          'RobotoSlab_500Medium',
+          'RobotoSlab_600SemiBold',
+          'RobotoSlab_700Bold',
+        ],
+        'source-sans': [
+          'SourceSans3_400Regular',
+          'SourceSans3_500Medium',
+          'SourceSans3_600SemiBold',
+          'SourceSans3_700Bold',
+        ],
+      },
       colors: {
         'primary-blue': '#6FACDE',
         blue: '#0075BC',
@@ -151,5 +167,56 @@ module.exports = {
     },
   },
   darkMode: 'class',
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities, addVariant }) {
+      // Font weight to font family mapping
+      const fontWeightMap = {
+        'roboto-slab': {
+          400: 'RobotoSlab_400Regular',
+          500: 'RobotoSlab_500Medium',
+          600: 'RobotoSlab_600SemiBold',
+          700: 'RobotoSlab_700Bold',
+        },
+        'source-sans': {
+          400: 'SourceSans3_400Regular',
+          500: 'SourceSans3_500Medium',
+          600: 'SourceSans3_600SemiBold',
+          700: 'SourceSans3_700Bold',
+        },
+      };
+
+      // Create utilities that combine font-family and font-weight
+      Object.entries(fontWeightMap).forEach(([fontName, weights]) => {
+        Object.entries(weights).forEach(([weight, fontFamily]) => {
+          addUtilities({
+            [`.font-${fontName}-${weight}`]: {
+              fontFamily: fontFamily,
+            },
+          });
+        });
+      });
+
+      // Override default font-weight utilities when used with specific font families
+      addUtilities({
+        '.font-roboto-slab.font-normal': {
+          fontFamily: 'RobotoSlab_400Regular',
+        },
+        '.font-roboto-slab.font-medium': { fontFamily: 'RobotoSlab_500Medium' },
+        '.font-roboto-slab.font-semibold': {
+          fontFamily: 'RobotoSlab_600SemiBold',
+        },
+        '.font-roboto-slab.font-bold': { fontFamily: 'RobotoSlab_700Bold' },
+        '.font-source-sans.font-normal': {
+          fontFamily: 'SourceSans3_400Regular',
+        },
+        '.font-source-sans.font-medium': {
+          fontFamily: 'SourceSans3_500Medium',
+        },
+        '.font-source-sans.font-semibold': {
+          fontFamily: 'SourceSans3_600SemiBold',
+        },
+        '.font-source-sans.font-bold': { fontFamily: 'SourceSans3_700Bold' },
+      });
+    }),
+  ],
 };

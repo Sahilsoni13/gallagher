@@ -6,13 +6,17 @@ import BottomSheet, {
   BottomSheetBackdropProps,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   const sheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['75%'], []);
+
+  const [merchant, setMerchant] = useState('');
+
+  console.log(merchant, 'merchant');
 
   const renderBackdrop = useCallback(
     (props: BottomSheetBackdropProps) => (
@@ -42,16 +46,21 @@ export default function HomeScreen() {
           <Text className="text-red-500 dark:text-green-500 text-lg font-semibold">
             Hello - Theme Demo
           </Text>
-          <Text className="mt-2 text-gray-800 dark:text-gray-200">
+          <Text className="mt-2 text-gray-800 dark:text-gray-200 font-source-sans font-bold">
             This text changes color based on theme
           </Text>
         </View>
         <View className="p-4 space-y-1">
-          <Input placeholder="Office Depot" label="Merchant" important={true} />
+          <Input
+            onChangeText={setMerchant}
+            placeholder="Office Depot"
+            label="Merchant"
+            important={true}
+          />
           <Button
             title="Open Bottom Sheet"
             onPress={() => sheetRef.current?.snapToIndex(0)}
-            variant="secondary"
+            variant="danger"
           />
         </View>
       </ScrollView>
